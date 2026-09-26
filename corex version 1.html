@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corex - Soft Skills para Ingenieros</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter para legibilidad, Fira Code para toques tech -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        corex: {
+                            dark: '#0f172a',    // Slate 900
+                            card: '#1e293b',    // Slate 800
+                            primary: '#3b82f6', // Blue 500
+                            accent: '#10b981',  // Emerald 500
+                            warning: '#f59e0b', // Amber 500
+                            danger: '#ef4444',  // Red 500
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Animaciones personalizadas */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .poof-animation { animation: poof 1s forwards; }
+        @keyframes poof { 
+            0% { transform: scale(1); opacity: 1; filter: blur(0); } 
+            50% { transform: scale(1.1); opacity: 0.5; filter: blur(5px); }
+            100% { transform: scale(0); opacity: 0; filter: blur(10px); }
+        }
+
+        /* Custom Scrollbar para dar aspecto tech */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="bg-corex-dark text-slate-300 font-sans h-screen overflow-hidden flex selection:bg-corex-primary selection:text-white">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-20 md:w-64 bg-corex-card h-full border-r border-slate-700 flex flex-col transition-all duration-300">
+        <!-- Logo -->
+        <div class="h-20 flex items-center justify-center md:justify-start md:px-6 border-b border-slate-700">
+            <i class="fa-solid fa-terminal text-corex-primary text-2xl"></i>
+            <span class="hidden md:block ml-3 font-mono font-bold text-xl text-white tracking-wider">COREX</span>
+        </div>
+
+        <!-- Nav Links -->
+        <nav class="flex-1 py-6 space-y-2">
+            <button onclick="navigate('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+                <i class="fa-solid fa-layer-group text-lg w-6 text-center"></i>
+                <span class="hidden md:block ml-4 font-medium">Dashboard</span>
+            </button>
+            <button onclick="navigate('cursos')" id="nav-cursos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+                <i class="fa-solid fa-graduation-cap text-lg w-6 text-center"></i>
+                <span class="hidden md:block ml-4 font-medium">Micro-lecciones</span>
+            </button>
+            <button onclick="navigate('retos')" id="nav-retos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+                <i class="fa-solid fa-bolt text-lg w-6 text-center"></i>
+                <span class="hidden md:block ml-4 font-medium">Retos IRL</span>
+            </button>
+            <button onclick="navigate('habitos')" id="nav-habitos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+                <i class="fa-solid fa-fire text-lg w-6 text-center"></i>
+                <span class="hidden md:block ml-4 font-medium">Hábitos</span>
+            </button>
+            <button onclick="navigate('basurero')" id="nav-basurero" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+                <i class="fa-solid fa-trash-can-arrow-up text-lg w-6 text-center"></i>
+                <span class="hidden md:block ml-4 font-medium">Basurero Emocional</span>
+            </button>
+        </nav>
+
+        <!-- User Mini Profile -->
+        <div class="p-4 border-t border-slate-700 flex items-center justify-center md:justify-start">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=3b82f6" alt="Avatar" class="w-10 h-10 rounded-full bg-slate-600">
+            <div class="hidden md:block ml-3">
+                <p class="text-sm font-semibold text-white">DevUser_99</p>
+                <p class="text-xs text-corex-primary font-mono">Lvl 3 Integradora</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden">
+        
+        <!-- Gamification Header -->
+        <header class="h-20 bg-corex-dark/95 backdrop-blur-sm border-b border-slate-700 flex items-center justify-between px-8 z-10">
+            <h2 id="page-title" class="text-2xl font-bold text-white tracking-tight">Dashboard</h2>
+            
+            <div class="flex items-center space-x-6">
+                <!-- Streak -->
+                <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 tooltip cursor-help" title="Racha actual de días consecutivos">
+                    <i class="fa-solid fa-fire text-corex-warning"></i>
+                    <span id="streak-counter" class="font-bold text-white">12</span>
+                </div>
+                
+                <!-- XP Bar -->
+                <div class="flex items-center space-x-3">
+                    <div class="flex flex-col items-end">
+                        <span class="text-xs text-slate-400 font-mono">Nivel 3</span>
+                        <span class="text-sm font-bold text-corex-accent"><span id="xp-counter">450</span>/1000 XP</span>
+                    </div>
+                    <div class="w-32 h-3 bg-slate-700 rounded-full overflow-hidden">
+                        <div id="xp-bar" class="h-full bg-gradient-to-r from-corex-primary to-corex-accent w-[45%] transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Container -->
+        <div id="content-container" class="flex-1 overflow-y-auto p-8 fade-in">
+            <!-- Content will be injected here via JS -->
+        </div>
+
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3"></div>
+
+    <script>
+        // --- ESTADO DE LA APLICACIÓN (MOCK DATA) ---
+        const state = {
+            user: { xp: 450, level: 3, streak: 12 },
+            cursos: [
+                { id: 'c1', title: 'Anatomía de un Feedback Constructivo', time: '3 min', xp: 50, icon: 'fa-comments', progress: 100, completed: true },
+                { id: 'c2', title: 'Escucha Activa en Code Reviews', time: '4 min', xp: 75, icon: 'fa-ear-listen', progress: 30, completed: false },
+                { id: 'c3', title: 'Sobreviviendo a la Daily Standup', time: '5 min', xp: 100, icon: 'fa-people-group', progress: 0, completed: false }
+            ],
+            retos: [
+                { id: 'r1', title: 'El contacto visual de 3 segundos', desc: 'Pide un café y mira a los ojos al barista al agradecerle. Cuenta hasta 3 internamente.', xp: 150, level: 1, completed: false, category: 'Desensibilización' },
+                { id: 'r2', title: 'La Pregunta en Público', desc: 'En lugar de solo dar tu estatus en la daily, haz una pregunta sobre el blocker de un compañero.', xp: 200, level: 2, completed: false, category: 'Comunicación' },
+                { id: 'r3', title: 'Rechazo controlado', desc: 'Pide un descuento en una tienda donde sabes que dirán que no (ej. supermercado). Acostúmbrate al "No".', xp: 500, level: 4, completed: false, category: 'Resiliencia' }
+            ],
+            habitos: [
+                { id: 'h1', title: 'Meditar (Mindfulness)', currentStreak: 5, target: 'Diario', doneToday: true },
+                { id: 'h2', title: 'Escribir 1 cosa positiva', currentStreak: 12, target: 'Diario', doneToday: false },
+                { id: 'h3', title: '15 min lejos de pantallas', currentStreak: 2, target: 'Diario', doneToday: false }
+            ],
+            diario: []
+        };
+
+        // --- SISTEMA DE NAVEGACIÓN Y RENDERIZADO ---
+        const views = {
+            dashboard: renderDashboard,
+            cursos: renderCursos,
+            retos: renderRetos,
+            habitos: renderHabitos,
+            basurero: renderBasurero
+        };
+
+        function navigate(viewName) {
+            // Actualizar UI de navegación
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-corex-primary', 'bg-slate-800', 'border-corex-primary');
+                btn.classList.add('text-slate-400', 'border-transparent');
+            });
+            const activeBtn = document.getElementById(`nav-${viewName}`);
+            activeBtn.classList.remove('text-slate-400', 'border-transparent');
+            activeBtn.classList.add('text-corex-primary', 'bg-slate-800', 'border-corex-primary');
+
+            // Actualizar Título
+            const titles = {
+                dashboard: 'Dashboard General',
+                cursos: 'Micro-lecciones',
+                retos: 'Misiones IRL (In Real Life)',
+                habitos: 'Gestión de Hábitos',
+                basurero: '/dev/null Emocional'
+            };
+            document.getElementById('page-title').innerText = titles[viewName];
+
+            // Renderizar contenido
+            const container = document.getElementById('content-container');
+            container.innerHTML = ''; // Limpiar
+            container.classList.remove('fade-in');
+            void container.offsetWidth; // Trigger reflow para reiniciar animación
+            container.classList.add('fade-in');
+            
+            container.innerHTML = views[viewName]();
+        }
+
+        // --- STREAMING_CHUNK:Renderizadores de Vistas (Componentes UI)... ---
+
+        function renderDashboard() {
+            const nextReto = state.retos.find(r => !r.completed);
+            const nextCurso = state.cursos.find(c => !c.completed);
+
+            return `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Welcome Card -->
+                    <div class="col-span-1 lg:col-span-2 bg-gradient-to-br from-slate-800 to-corex-card p-6 rounded-2xl border border-slate-700 shadow-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-corex-primary rounded-full blur-3xl opacity-20"></div>
+                        <h3 class="text-2xl font-bold text-white mb-2">¡Hola, DevUser_99! 👋</h3>
+                        <p class="text-slate-400 mb-6 max-w-lg">Estás en una racha de ${state.user.streak} días. Has estado trabajando constantemente en tus soft skills. Tu sistema operativo social se está actualizando con éxito.</p>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <p class="text-xs text-slate-500 font-mono uppercase mb-1">Próxima Misión IRL</p>
+                                <p class="font-semibold text-corex-warning truncate">${nextReto ? nextReto.title : 'Todas completadas!'}</p>
+                                <button onclick="navigate('retos')" class="mt-3 text-sm text-corex-primary hover:text-white transition-colors">Ir a la misión &rarr;</button>
+                            </div>
+                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <p class="text-xs text-slate-500 font-mono uppercase mb-1">Continuar Lección</p>
+                                <p class="font-semibold text-corex-accent truncate">${nextCurso ? nextCurso.title : 'Espera nuevos cursos'}</p>
+                                <button onclick="navigate('cursos')" class="mt-3 text-sm text-corex-primary hover:text-white transition-colors">Continuar &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Card -->
+                    <div class="bg-corex-card p-6 rounded-2xl border border-slate-700 shadow-lg flex flex-col justify-center items-center text-center">
+                        <div class="w-24 h-24 rounded-full border-4 border-slate-700 flex items-center justify-center mb-4 relative">
+                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
+                                <path class="text-slate-700" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="text-corex-accent" stroke-dasharray="${(state.user.xp % 1000) / 10}, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            </svg>
+                            <i class="fa-solid fa-code-branch text-3xl text-corex-accent"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Nivel ${state.user.level}</h4>
+                        <p class="text-sm text-slate-400">Rango: <span class="text-corex-primary">Integradora</span></p>
+                        <p class="text-xs text-slate-500 mt-2 font-mono">${1000 - state.user.xp} XP para Nivel 4</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Módulo de Cursos... ---
+        function renderCursos() {
+            let html = `<div class="mb-6"><p class="text-slate-400">Cápsulas de conocimiento de 3-5 minutos enfocadas en habilidades blandas, explicadas con analogías técnicas.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
+            
+            state.cursos.forEach(curso => {
+                const statusColor = curso.completed ? 'text-corex-accent' : (curso.progress > 0 ? 'text-corex-primary' : 'text-slate-500');
+                const btnText = curso.completed ? 'Repasar' : (curso.progress > 0 ? 'Continuar' : 'Iniciar');
+                
+                html += `
+                <div class="bg-corex-card rounded-2xl border border-slate-700 p-6 flex flex-col hover:border-corex-primary/50 transition-colors cursor-pointer group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center group-hover:bg-corex-primary/20 transition-colors">
+                            <i class="fa-solid ${curso.icon} text-xl ${statusColor}"></i>
+                        </div>
+                        <span class="bg-slate-800 text-xs px-2 py-1 rounded text-slate-300 font-mono">+${curso.xp} XP</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 leading-tight">${curso.title}</h3>
+                    <div class="flex items-center space-x-3 text-sm text-slate-400 mb-6">
+                        <span><i class="fa-regular fa-clock mr-1"></i> ${curso.time}</span>
+                    </div>
+                    
+                    <div class="mt-auto">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-400">Progreso</span>
+                            <span class="text-white font-mono">${curso.progress}%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-800 rounded-full mb-4">
+                            <div class="h-full bg-corex-primary rounded-full" style="width: ${curso.progress}%"></div>
+                        </div>
+                        <button class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm font-medium transition-colors border border-slate-600">
+                            ${btnText}
+                        </button>
+                    </div>
+                </div>`;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Retos IRL (Gamificación)... ---
+        function renderRetos() {
+            let html = `
+                <div class="mb-6 flex justify-between items-end">
+                    <div class="max-w-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2">Desensibilización Sistemática</h3>
+                        <p class="text-slate-400">Misiones del mundo real diseñadas para empujar tu zona de confort progresivamente. Al completar, haz commit de tu victoria.</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+            `;
+            
+            state.retos.forEach(reto => {
+                const isCompleted = reto.completed;
+                const borderClass = isCompleted ? 'border-corex-accent bg-corex-accent/5' : 'border-slate-700 bg-corex-card';
+                const opacityClass = isCompleted ? 'opacity-60' : 'opacity-100';
+                
+                html += `
+                <div class="${borderClass} ${opacityClass} p-5 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-3 mb-1">
+                            <span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono border border-slate-600">Nivel ${reto.level}</span>
+                            <span class="text-xs text-corex-warning font-semibold tracking-wider uppercase">${reto.category}</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white ${isCompleted ? 'line-through text-slate-400' : ''}">${reto.title}</h4>
+                        <p class="text-sm text-slate-400 mt-1">${reto.desc}</p>
+                    </div>
+                    <div class="flex items-center justify-between md:flex-col md:items-end gap-3 md:min-w-[120px]">
+                        <span class="font-mono font-bold text-corex-primary">+${reto.xp} XP</span>
+                        ${isCompleted ? 
+                            `<span class="text-corex-accent text-sm font-medium"><i class="fa-solid fa-check mr-1"></i> Completado</span>` : 
+                            `<button onclick="completeTask('reto', '${reto.id}', ${reto.xp})" class="px-4 py-2 bg-corex-primary hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-500/20">
+                                Confirmar <i class="fa-solid fa-terminal ml-1"></i>
+                            </button>`
+                        }
+                    </div>
+                </div>`;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Hábitos (Estilo James Clear)... ---
+        function renderHabitos() {
+            let html = `
+                <div class="mb-6">
+                    <p class="text-slate-400">Pequeños scripts diarios. La repetición crea conexiones neuronales (y mantiene tu racha viva 🔥).</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            `;
+            
+            state.habitos.forEach(habito => {
+                const isDone = habito.doneToday;
+                const checkClass = isDone ? 'bg-corex-accent border-corex-accent text-white' : 'border-slate-500 text-transparent hover:border-corex-primary';
+                
+                html += `
+                <div class="bg-corex-card p-5 rounded-2xl border border-slate-700 flex items-center justify-between group">
+                    <div class="flex items-center space-x-4 flex-1">
+                        <button onclick="toggleHabit('${habito.id}')" class="w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors ${checkClass}">
+                            <i class="fa-solid fa-check text-sm"></i>
+                        </button>
+                        <div>
+                            <h4 class="font-semibold text-white ${isDone ? 'line-through text-slate-400' : ''}">${habito.title}</h4>
+                            <p class="text-xs text-slate-500"><i class="fa-solid fa-fire text-corex-warning mr-1"></i> ${habito.currentStreak} días seguidos</p>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Basurero Emocional (Psychological Safety)... ---
+        function renderBasurero() {
+            return `
+                <div class="max-w-3xl mx-auto flex flex-col h-full relative">
+                    <div class="text-center mb-8">
+                        <i class="fa-solid fa-dumpster-fire text-4xl text-corex-danger mb-4"></i>
+                        <h2 class="text-2xl font-bold text-white mb-2">/dev/null Emocional</h2>
+                        <p class="text-slate-400 text-sm">¿Día frustrante? ¿Alguien rompió prod y te echó la culpa? ¿Ansiedad por networking? Escríbelo aquí. Este espacio es temporal, seguro y <strong>no se guarda en ninguna base de datos</strong>. Cuando presiones el botón, se destruirá permanentemente.</p>
+                    </div>
+
+                    <div class="flex-1 flex flex-col relative" id="vent-container">
+                        <textarea id="vent-input" class="w-full h-64 bg-slate-900 border border-slate-700 rounded-xl p-6 text-slate-300 font-mono text-sm resize-none focus:outline-none focus:border-corex-danger focus:ring-1 focus:ring-corex-danger transition-colors placeholder-slate-600 shadow-inner" placeholder="Escribe tu frustración aquí. Vomita el texto. No te preocupes por la gramática..."></textarea>
+                        
+                        <div class="mt-6 flex justify-end space-x-4">
+                            <button onclick="burnJournal()" class="px-6 py-3 bg-corex-danger hover:bg-red-600 text-white rounded-xl font-bold transition-colors shadow-lg shadow-red-500/20 flex items-center group">
+                                <i class="fa-solid fa-fire mr-2 group-hover:scale-125 transition-transform"></i>
+                                Incinerar Registro (rm -rf)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- STREAMING_CHUNK:Lógica de Interactividad y Gamificación... ---
+
+        function completeTask(type, id, xpGained) {
+            if(type === 'reto') {
+                const reto = state.retos.find(r => r.id === id);
+                if(reto && !reto.completed) {
+                    reto.completed = true;
+                    addXP(xpGained);
+                    showToast(`¡Reto Completado! +${xpGained} XP`, 'success');
+                    navigate('retos'); // Re-render
+                }
+            }
+        }
+
+        function toggleHabit(id) {
+            const habito = state.habitos.find(h => h.id === id);
+            if(habito) {
+                habito.doneToday = !habito.doneToday;
+                if(habito.doneToday) {
+                    habito.currentStreak++;
+                    addXP(10);
+                    showToast('Hábito marcado. +10 XP', 'info');
+                } else {
+                    habito.currentStreak = Math.max(0, habito.currentStreak - 1);
+                }
+                navigate('habitos');
+            }
+        }
+
+        function addXP(amount) {
+            state.user.xp += amount;
+            
+            // Lógica de subida de nivel básica (cada 1000xp)
+            if(state.user.xp >= 1000) {
+                state.user.xp -= 1000;
+                state.user.level += 1;
+                showToast(`¡Subiste de Nivel! Ahora eres nivel ${state.user.level} 🎉`, 'success', 5000);
+            }
+            
+            updateHeaderUI();
+        }
+
+        function updateHeaderUI() {
+            document.getElementById('xp-counter').innerText = state.user.xp;
+            document.getElementById('xp-bar').style.width = `${(state.user.xp / 1000) * 100}%`;
+            // En un sistema real, actualizaríamos el nivel mostrado también.
+        }
+
+        function burnJournal() {
+            const textarea = document.getElementById('vent-input');
+            if(textarea.value.trim() === '') {
+                showToast('No hay nada que incinerar.', 'warning');
+                return;
+            }
+
+            // Aplicar animación de destrucción
+            textarea.classList.add('poof-animation');
+            
+            // Simular el borrado y restaurar
+            setTimeout(() => {
+                textarea.value = '';
+                textarea.classList.remove('poof-animation');
+                showToast('Memoria borrada de forma segura.', 'success');
+                addXP(5); // Pequeña recompensa por descargar
+            }, 1000);
+        }
+
+        // --- STREAMING_CHUNK:Sistema de Notificaciones (Toasts)... ---
+        function showToast(message, type = 'info', duration = 3000) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            // Colores por tipo
+            const colors = {
+                success: 'bg-corex-card border-corex-accent text-white',
+                warning: 'bg-corex-card border-corex-warning text-white',
+                info: 'bg-corex-card border-corex-primary text-white'
+            };
+            
+            const icons = {
+                success: 'fa-check-circle text-corex-accent',
+                warning: 'fa-triangle-exclamation text-corex-warning',
+                info: 'fa-info-circle text-corex-primary'
+            };
+
+            toast.className = `flex items-center space-x-3 p-4 rounded-xl border-l-4 shadow-xl fade-in ${colors[type]}`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icons[type]} text-xl"></i>
+                <span class="font-medium text-sm">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Remover después del tiempo
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                toast.style.transition = 'all 0.3s ease-out';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // Inicialización al cargar la página
+        window.onload = () => {
+            navigate('dashboard');
+        };
+
+    </script>
+</body>
+</html>
