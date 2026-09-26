@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corex - Soft Skills para Ingenieros</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome para Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Inter para legibilidad, Fira Code para toques tech -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -21,12 +18,14 @@
                     },
                     colors: {
                         corex: {
-                            dark: '#0f172a',    // Slate 900
-                            card: '#1e293b',    // Slate 800
-                            primary: '#3b82f6', // Blue 500
-                            accent: '#10b981',  // Emerald 500
-                            warning: '#f59e0b', // Amber 500
-                            danger: '#ef4444',  // Red 500
+                            dark: '#0A1420',
+                            card: '#101B2B',
+                            card2: '#162336',
+                            primary: '#17B6C4',
+                            primary2: '#1B3A6B',
+                            accent: '#5EEAD4',
+                            warning: '#f59e0b',
+                            danger: '#ef4444',
                         }
                     }
                 }
@@ -34,61 +33,65 @@
         }
     </script>
     <style>
-        /* Animaciones personalizadas */
         .fade-in { animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
+
         .poof-animation { animation: poof 1s forwards; }
-        @keyframes poof { 
-            0% { transform: scale(1); opacity: 1; filter: blur(0); } 
+        @keyframes poof {
+            0% { transform: scale(1); opacity: 1; filter: blur(0); }
             50% { transform: scale(1.1); opacity: 0.5; filter: blur(5px); }
             100% { transform: scale(0); opacity: 0; filter: blur(10px); }
         }
 
-        /* Custom Scrollbar para dar aspecto tech */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar-track { background: #0A1420; }
+        ::-webkit-scrollbar-thumb { background: #1E3350; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2A4568; }
+
+        .toast-pop { animation: fadeIn .25s ease-out; }
     </style>
 </head>
 <body class="bg-corex-dark text-slate-300 font-sans h-screen overflow-hidden flex selection:bg-corex-primary selection:text-white">
 
     <!-- Sidebar Navigation -->
-    <aside class="w-20 md:w-64 bg-corex-card h-full border-r border-slate-700 flex flex-col transition-all duration-300">
-        <!-- Logo -->
-        <div class="h-20 flex items-center justify-center md:justify-start md:px-6 border-b border-slate-700">
-            <i class="fa-solid fa-terminal text-corex-primary text-2xl"></i>
+    <aside class="w-20 md:w-64 bg-gradient-to-b from-[#0E2A4D] to-[#0A1B33] h-full border-r border-white/10 flex flex-col transition-all duration-300">
+        <div class="h-20 flex items-center justify-center md:justify-start md:px-6 border-b border-white/10">
+            <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#5EEAD4"/><stop offset="1" stop-color="#17B6C4"/>
+                </linearGradient></defs>
+                <polygon points="50,4 93,28 93,72 50,96 7,72 7,28" fill="none" stroke="#1B3A6B" stroke-width="7"/>
+                <path d="M50 34c0 10-14 8-14 24 0 12 8 18 14 26 6-8 14-14 14-26 0-16-14-14-14-24z" fill="url(#lg1)"/>
+                <circle cx="50" cy="30" r="7" fill="url(#lg1)"/>
+            </svg>
             <span class="hidden md:block ml-3 font-mono font-bold text-xl text-white tracking-wider">COREX</span>
         </div>
 
-        <!-- Nav Links -->
         <nav class="flex-1 py-6 space-y-2">
-            <button onclick="navigate('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+            <button onclick="navigate('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 transition-colors border-r-2 border-transparent">
                 <i class="fa-solid fa-layer-group text-lg w-6 text-center"></i>
                 <span class="hidden md:block ml-4 font-medium">Dashboard</span>
             </button>
-            <button onclick="navigate('cursos')" id="nav-cursos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+            <button onclick="navigate('cursos')" id="nav-cursos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 transition-colors border-r-2 border-transparent">
                 <i class="fa-solid fa-graduation-cap text-lg w-6 text-center"></i>
                 <span class="hidden md:block ml-4 font-medium">Micro-lecciones</span>
             </button>
-            <button onclick="navigate('retos')" id="nav-retos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+            <button onclick="navigate('retos')" id="nav-retos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 transition-colors border-r-2 border-transparent">
                 <i class="fa-solid fa-bolt text-lg w-6 text-center"></i>
                 <span class="hidden md:block ml-4 font-medium">Retos IRL</span>
             </button>
-            <button onclick="navigate('habitos')" id="nav-habitos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+            <button onclick="navigate('habitos')" id="nav-habitos" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 transition-colors border-r-2 border-transparent">
                 <i class="fa-solid fa-fire text-lg w-6 text-center"></i>
                 <span class="hidden md:block ml-4 font-medium">Hábitos</span>
             </button>
-            <button onclick="navigate('basurero')" id="nav-basurero" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors border-r-2 border-transparent">
+            <button onclick="navigate('basurero')" id="nav-basurero" class="nav-btn w-full flex items-center px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 transition-colors border-r-2 border-transparent">
                 <i class="fa-solid fa-trash-can-arrow-up text-lg w-6 text-center"></i>
                 <span class="hidden md:block ml-4 font-medium">Basurero Emocional</span>
             </button>
         </nav>
 
-        <!-- User Mini Profile -->
-        <div class="p-4 border-t border-slate-700 flex items-center justify-center md:justify-start">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=3b82f6" alt="Avatar" class="w-10 h-10 rounded-full bg-slate-600">
+        <div class="p-4 border-t border-white/10 flex items-center justify-center md:justify-start">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=17B6C4" alt="Avatar" class="w-10 h-10 rounded-full bg-slate-600">
             <div class="hidden md:block ml-3">
                 <p class="text-sm font-semibold text-white">DevUser_99</p>
                 <p class="text-xs text-corex-primary font-mono">Lvl 3 Integradora</p>
@@ -98,49 +101,53 @@
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col h-full relative overflow-hidden">
-        
-        <!-- Gamification Header -->
-        <header class="h-20 bg-corex-dark/95 backdrop-blur-sm border-b border-slate-700 flex items-center justify-between px-8 z-10">
+
+        <header class="h-20 bg-corex-dark/95 backdrop-blur-sm border-b border-white/5 flex items-center justify-between px-8 z-10">
             <h2 id="page-title" class="text-2xl font-bold text-white tracking-tight">Dashboard</h2>
-            
-            <div class="flex items-center space-x-6">
-                <!-- Streak -->
-                <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 tooltip cursor-help" title="Racha actual de días consecutivos">
+
+            <div class="flex items-center space-x-4">
+                <button onclick="navigate('planes')" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-corex-primary/40 text-corex-primary text-xs font-semibold hover:bg-corex-primary/10 transition-colors">
+                    <i class="fa-solid fa-bolt"></i> Mejorar a Pro
+                </button>
+                <div class="flex items-center space-x-2 bg-corex-card2 px-3 py-1.5 rounded-full border border-white/5" title="Racha actual de días consecutivos">
                     <i class="fa-solid fa-fire text-corex-warning"></i>
                     <span id="streak-counter" class="font-bold text-white">12</span>
                 </div>
-                
-                <!-- XP Bar -->
+
                 <div class="flex items-center space-x-3">
                     <div class="flex flex-col items-end">
                         <span class="text-xs text-slate-400 font-mono">Nivel 3</span>
                         <span class="text-sm font-bold text-corex-accent"><span id="xp-counter">450</span>/1000 XP</span>
                     </div>
-                    <div class="w-32 h-3 bg-slate-700 rounded-full overflow-hidden">
+                    <div class="w-32 h-3 bg-corex-card2 rounded-full overflow-hidden">
                         <div id="xp-bar" class="h-full bg-gradient-to-r from-corex-primary to-corex-accent w-[45%] transition-all duration-500"></div>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Dynamic Content Container -->
         <div id="content-container" class="flex-1 overflow-y-auto p-8 fade-in">
-            <!-- Content will be injected here via JS -->
         </div>
 
     </main>
 
-    <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3"></div>
 
     <script>
-        // --- ESTADO DE LA APLICACIÓN (MOCK DATA) ---
         const state = {
-            user: { xp: 450, level: 3, streak: 12 },
+            user: { xp: 450, level: 3, streak: 12, ricegrains: 0 },
             cursos: [
                 { id: 'c1', title: 'Anatomía de un Feedback Constructivo', time: '3 min', xp: 50, icon: 'fa-comments', progress: 100, completed: true },
                 { id: 'c2', title: 'Escucha Activa en Code Reviews', time: '4 min', xp: 75, icon: 'fa-ear-listen', progress: 30, completed: false },
                 { id: 'c3', title: 'Sobreviviendo a la Daily Standup', time: '5 min', xp: 100, icon: 'fa-people-group', progress: 0, completed: false }
+            ],
+            videos: [
+                { id: 'v1', title: '3 trucos para dar feedback sin sonar duro', dur: '0:45', icon: 'fa-comments', up: 128, down: 4, vote: null,
+                  comments: [{a:'Camila R.', t:'Buenísimo, lo aplico mañana'}, {a:'Lucas M.', t:'El ejemplo 2 me sirvió mucho'}] },
+                { id: 'v2', title: 'Cómo sobrevivir tu primera daily', dur: '0:38', icon: 'fa-people-group', up: 96, down: 2, vote: null,
+                  comments: [{a:'Valentina G.', t:'Ojalá lo hubiera visto antes'}] },
+                { id: 'v3', title: 'Preguntar sin miedo en code review', dur: '0:52', icon: 'fa-code-branch', up: 64, down: 1, vote: null,
+                  comments: [] }
             ],
             retos: [
                 { id: 'r1', title: 'El contacto visual de 3 segundos', desc: 'Pide un café y mira a los ojos al barista al agradecerle. Cuenta hasta 3 internamente.', xp: 150, level: 1, completed: false, category: 'Desensibilización' },
@@ -152,49 +159,66 @@
                 { id: 'h2', title: 'Escribir 1 cosa positiva', currentStreak: 12, target: 'Diario', doneToday: false },
                 { id: 'h3', title: '15 min lejos de pantallas', currentStreak: 2, target: 'Diario', doneToday: false }
             ],
-            diario: []
+            muroApoyo: [
+                { a: 'Anónimo', t: 'Hoy alguien rompió prod y sentí que era mi culpa, aunque no lo fue.', h: 11 },
+                { a: 'Anónimo', t: 'Primera vez que hablo en una junta sin que me tiemble la voz.', h: 6 }
+            ]
         };
 
-        // --- SISTEMA DE NAVEGACIÓN Y RENDERIZADO ---
-        const views = {
-            dashboard: renderDashboard,
-            cursos: renderCursos,
-            retos: renderRetos,
-            habitos: renderHabitos,
-            basurero: renderBasurero
-        };
+        const badWords = ['idiota','estupido','estúpido','imbecil','imbécil','puto','puta','pendejo','mierda','odio a','inutil','inútil'];
+        function hasBadLanguage(t){ t=t.toLowerCase(); return badWords.some(w=>t.includes(w)); }
+
+        let db=null, user=null, docRef=null;
+        async function initBackend(){
+            if(typeof claude==='undefined') return;
+            try{
+                user = await claude.use('user');
+                db = await claude.use('db');
+                if(db && user){
+                    docRef = db.doc(`data/users/${user.id()}/corex_progress`);
+                    const snap = await docRef.get();
+                    if(snap && snap.exists && snap.data()){
+                        const d = snap.data();
+                        Object.assign(state.user, d.user||{});
+                        if(d.retosCompleted) state.retos.forEach(r=>{ if(d.retosCompleted.includes(r.id)) r.completed=true; });
+                        if(d.habitos) state.habitos.forEach(h=>{ if(d.habitos[h.id]!==undefined){ h.doneToday=d.habitos[h.id].done; h.currentStreak=d.habitos[h.id].streak; } });
+                        updateHeaderUI();
+                    }
+                }
+            }catch(e){ console.warn('Backend no disponible, modo local', e); }
+        }
+        function persist(){
+            if(!docRef) return;
+            docRef.set({
+                user: state.user,
+                retosCompleted: state.retos.filter(r=>r.completed).map(r=>r.id),
+                habitos: Object.fromEntries(state.habitos.map(h=>[h.id,{done:h.doneToday,streak:h.currentStreak}]))
+            }, {merge:true}).catch(e=>console.warn('No se pudo guardar', e));
+        }
+
+        const views = { dashboard: renderDashboard, cursos: renderCursos, retos: renderRetos, habitos: renderHabitos, basurero: renderBasurero, planes: renderPlanes };
 
         function navigate(viewName) {
-            // Actualizar UI de navegación
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-corex-primary', 'bg-slate-800', 'border-corex-primary');
+                btn.classList.remove('text-corex-primary', 'bg-corex-card2', 'border-corex-primary');
                 btn.classList.add('text-slate-400', 'border-transparent');
             });
             const activeBtn = document.getElementById(`nav-${viewName}`);
-            activeBtn.classList.remove('text-slate-400', 'border-transparent');
-            activeBtn.classList.add('text-corex-primary', 'bg-slate-800', 'border-corex-primary');
+            if(activeBtn){
+                activeBtn.classList.remove('text-slate-400', 'border-transparent');
+                activeBtn.classList.add('text-corex-primary', 'bg-corex-card2', 'border-corex-primary');
+            }
 
-            // Actualizar Título
-            const titles = {
-                dashboard: 'Dashboard General',
-                cursos: 'Micro-lecciones',
-                retos: 'Misiones IRL (In Real Life)',
-                habitos: 'Gestión de Hábitos',
-                basurero: '/dev/null Emocional'
-            };
+            const titles = { dashboard: 'Dashboard General', cursos: 'Micro-lecciones', retos: 'Misiones IRL (In Real Life)', habitos: 'Gestión de Hábitos', basurero: '/dev/null Emocional', planes: 'Planes y licencias' };
             document.getElementById('page-title').innerText = titles[viewName];
 
-            // Renderizar contenido
             const container = document.getElementById('content-container');
-            container.innerHTML = ''; // Limpiar
+            container.innerHTML = '';
             container.classList.remove('fade-in');
-            void container.offsetWidth; // Trigger reflow para reiniciar animación
+            void container.offsetWidth;
             container.classList.add('fade-in');
-            
             container.innerHTML = views[viewName]();
         }
-
-        // --- STREAMING_CHUNK:Renderizadores de Vistas (Componentes UI)... ---
 
         function renderDashboard() {
             const nextReto = state.retos.find(r => !r.completed);
@@ -202,19 +226,18 @@
 
             return `
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Welcome Card -->
-                    <div class="col-span-1 lg:col-span-2 bg-gradient-to-br from-slate-800 to-corex-card p-6 rounded-2xl border border-slate-700 shadow-lg relative overflow-hidden">
+                    <div class="col-span-1 lg:col-span-2 bg-gradient-to-br from-corex-card2 to-corex-card p-6 rounded-2xl border border-white/5 shadow-lg relative overflow-hidden">
                         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-corex-primary rounded-full blur-3xl opacity-20"></div>
                         <h3 class="text-2xl font-bold text-white mb-2">¡Hola, DevUser_99! 👋</h3>
                         <p class="text-slate-400 mb-6 max-w-lg">Estás en una racha de ${state.user.streak} días. Has estado trabajando constantemente en tus soft skills. Tu sistema operativo social se está actualizando con éxito.</p>
-                        
+
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                            <div class="bg-corex-dark/60 p-4 rounded-xl border border-white/5">
                                 <p class="text-xs text-slate-500 font-mono uppercase mb-1">Próxima Misión IRL</p>
                                 <p class="font-semibold text-corex-warning truncate">${nextReto ? nextReto.title : 'Todas completadas!'}</p>
                                 <button onclick="navigate('retos')" class="mt-3 text-sm text-corex-primary hover:text-white transition-colors">Ir a la misión &rarr;</button>
                             </div>
-                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                            <div class="bg-corex-dark/60 p-4 rounded-xl border border-white/5">
                                 <p class="text-xs text-slate-500 font-mono uppercase mb-1">Continuar Lección</p>
                                 <p class="font-semibold text-corex-accent truncate">${nextCurso ? nextCurso.title : 'Espera nuevos cursos'}</p>
                                 <button onclick="navigate('cursos')" class="mt-3 text-sm text-corex-primary hover:text-white transition-colors">Continuar &rarr;</button>
@@ -222,11 +245,10 @@
                         </div>
                     </div>
 
-                    <!-- Stats Card -->
-                    <div class="bg-corex-card p-6 rounded-2xl border border-slate-700 shadow-lg flex flex-col justify-center items-center text-center">
-                        <div class="w-24 h-24 rounded-full border-4 border-slate-700 flex items-center justify-center mb-4 relative">
+                    <div class="bg-corex-card p-6 rounded-2xl border border-white/5 shadow-lg flex flex-col justify-center items-center text-center">
+                        <div class="w-24 h-24 rounded-full border-4 border-corex-card2 flex items-center justify-center mb-4 relative">
                             <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
-                                <path class="text-slate-700" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="text-corex-card2" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 <path class="text-corex-accent" stroke-dasharray="${(state.user.xp % 1000) / 10}, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                             </svg>
                             <i class="fa-solid fa-code-branch text-3xl text-corex-accent"></i>
@@ -235,50 +257,119 @@
                         <p class="text-sm text-slate-400">Rango: <span class="text-corex-primary">Integradora</span></p>
                         <p class="text-xs text-slate-500 mt-2 font-mono">${1000 - state.user.xp} XP para Nivel 4</p>
                     </div>
+
+                    <div class="lg:col-span-2 bg-corex-card p-5 rounded-2xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">🌾</span>
+                            <div>
+                                <p class="text-sm font-semibold text-white">Tu granito de arroz</p>
+                                <p class="text-xs text-slate-400">Cada XP ganado dona simbólicamente arroz a comunidades con hambre.</p>
+                            </div>
+                        </div>
+                        <span class="font-mono font-bold text-corex-accent text-lg">${(state.user.ricegrains).toLocaleString('es-MX')} g</span>
+                    </div>
+
+                    <div id="ad-card" class="bg-corex-card/60 border border-dashed border-white/10 p-4 rounded-2xl flex items-start justify-between" style="display:none">
+                        <div class="flex items-start gap-3">
+                            <span class="text-xl">🎧</span>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wide">Patrocinado</p>
+                                <p class="text-sm text-slate-300">Audífonos LinguaPods — enfócate en tus micro-lecciones sin distracciones.</p>
+                            </div>
+                        </div>
+                        <button onclick="dismissAd()" class="text-slate-500 hover:text-white text-sm">✕</button>
+                    </div>
                 </div>
             `;
         }
 
-        // --- STREAMING_CHUNK:Renderizando Módulo de Cursos... ---
         function renderCursos() {
-            let html = `<div class="mb-6"><p class="text-slate-400">Cápsulas de conocimiento de 3-5 minutos enfocadas en habilidades blandas, explicadas con analogías técnicas.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
-            
-            state.cursos.forEach(curso => {
-                const statusColor = curso.completed ? 'text-corex-accent' : (curso.progress > 0 ? 'text-corex-primary' : 'text-slate-500');
-                const btnText = curso.completed ? 'Repasar' : (curso.progress > 0 ? 'Continuar' : 'Iniciar');
-                
-                html += `
-                <div class="bg-corex-card rounded-2xl border border-slate-700 p-6 flex flex-col hover:border-corex-primary/50 transition-colors cursor-pointer group">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center group-hover:bg-corex-primary/20 transition-colors">
-                            <i class="fa-solid ${curso.icon} text-xl ${statusColor}"></i>
+            const tab = renderCursos.tab || 'lecciones';
+            let html = `<div class="mb-6 flex items-center justify-between flex-wrap gap-3">
+                <p class="text-slate-400 max-w-xl">Cápsulas de conocimiento de 3-5 minutos enfocadas en habilidades blandas, explicadas con analogías técnicas.</p>
+                <div class="flex gap-2">
+                    <button onclick="setCursoTab('lecciones')" class="px-4 py-1.5 rounded-full text-sm border ${tab==='lecciones'?'bg-corex-primary border-corex-primary text-corex-dark font-semibold':'border-white/10 text-slate-400'}">Lecciones</button>
+                    <button onclick="setCursoTab('videos')" class="px-4 py-1.5 rounded-full text-sm border ${tab==='videos'?'bg-corex-primary border-corex-primary text-corex-dark font-semibold':'border-white/10 text-slate-400'}">Videos</button>
+                </div>
+            </div>`;
+
+            if(tab==='lecciones'){
+                html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
+                state.cursos.forEach(curso => {
+                    const statusColor = curso.completed ? 'text-corex-accent' : (curso.progress > 0 ? 'text-corex-primary' : 'text-slate-500');
+                    const btnText = curso.completed ? 'Repasar' : (curso.progress > 0 ? 'Continuar' : 'Iniciar');
+                    html += `
+                    <div class="bg-corex-card rounded-2xl border border-white/5 p-6 flex flex-col hover:border-corex-primary/50 transition-colors cursor-pointer group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-corex-card2 flex items-center justify-center group-hover:bg-corex-primary/20 transition-colors">
+                                <i class="fa-solid ${curso.icon} text-xl ${statusColor}"></i>
+                            </div>
+                            <span class="bg-corex-card2 text-xs px-2 py-1 rounded text-slate-300 font-mono">+${curso.xp} XP</span>
                         </div>
-                        <span class="bg-slate-800 text-xs px-2 py-1 rounded text-slate-300 font-mono">+${curso.xp} XP</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2 leading-tight">${curso.title}</h3>
-                    <div class="flex items-center space-x-3 text-sm text-slate-400 mb-6">
-                        <span><i class="fa-regular fa-clock mr-1"></i> ${curso.time}</span>
-                    </div>
-                    
-                    <div class="mt-auto">
-                        <div class="flex justify-between text-xs mb-1">
-                            <span class="text-slate-400">Progreso</span>
-                            <span class="text-white font-mono">${curso.progress}%</span>
+                        <h3 class="text-lg font-bold text-white mb-2 leading-tight">${curso.title}</h3>
+                        <div class="flex items-center space-x-3 text-sm text-slate-400 mb-6">
+                            <span><i class="fa-regular fa-clock mr-1"></i> ${curso.time}</span>
                         </div>
-                        <div class="w-full h-1.5 bg-slate-800 rounded-full mb-4">
-                            <div class="h-full bg-corex-primary rounded-full" style="width: ${curso.progress}%"></div>
+                        <div class="mt-auto">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-400">Progreso</span>
+                                <span class="text-white font-mono">${curso.progress}%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-corex-card2 rounded-full mb-4">
+                                <div class="h-full bg-corex-primary rounded-full" style="width: ${curso.progress}%"></div>
+                            </div>
+                            <button class="w-full py-2 bg-corex-card2 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors border border-white/10">
+                                ${btnText}
+                            </button>
                         </div>
-                        <button class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm font-medium transition-colors border border-slate-600">
-                            ${btnText}
-                        </button>
-                    </div>
-                </div>`;
-            });
-            html += `</div>`;
+                    </div>`;
+                });
+                html += `</div>`;
+            } else {
+                html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">` + state.videos.map(v => `
+                    <div class="bg-corex-card rounded-2xl border border-white/5 p-5">
+                        <div class="h-32 rounded-xl bg-gradient-to-br from-corex-primary2 to-corex-card2 flex items-center justify-center relative mb-3">
+                            <i class="fa-solid ${v.icon} text-3xl text-corex-accent"></i>
+                            <span class="absolute bottom-2 right-2 text-[11px] bg-black/50 px-1.5 py-0.5 rounded">${v.dur}</span>
+                        </div>
+                        <h4 class="text-white font-semibold text-sm mb-3">${v.title}</h4>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex gap-4">
+                                <span onclick="voteVideo('${v.id}','up')" class="cursor-pointer ${v.vote==='up'?'text-corex-accent':'text-slate-400'}"><i class="fa-solid fa-thumbs-up mr-1"></i>${v.up}</span>
+                                <span onclick="voteVideo('${v.id}','down')" class="cursor-pointer ${v.vote==='down'?'text-corex-danger':'text-slate-400'}"><i class="fa-solid fa-thumbs-down mr-1"></i>${v.down}</span>
+                            </div>
+                            <span onclick="toggleComments('${v.id}')" class="cursor-pointer text-slate-400"><i class="fa-regular fa-comment mr-1"></i>${v.comments.length}</span>
+                        </div>
+                        <div id="cm-${v.id}" class="hidden mt-3 pt-3 border-t border-white/5 text-sm">
+                            ${v.comments.map(c=>`<p class="mb-2"><span class="font-semibold text-white">${c.a}:</span> <span class="text-slate-400">${c.t}</span></p>`).join('') || '<p class="text-slate-500">Sé el primero en comentar.</p>'}
+                            <div class="flex gap-2 mt-2">
+                                <input id="in-${v.id}" placeholder="Comenta con respeto..." class="flex-1 bg-corex-card2 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-corex-primary">
+                                <button onclick="addComment('${v.id}')" class="bg-corex-primary text-corex-dark px-3 rounded-lg text-xs font-semibold">Enviar</button>
+                            </div>
+                        </div>
+                    </div>`).join('') + `</div>`;
+            }
             return html;
         }
+        function setCursoTab(tab){ renderCursos.tab = tab; navigate('cursos'); }
+        function voteVideo(id, type){
+            const v = state.videos.find(x=>x.id===id);
+            if(v.vote==='up') v.up--; if(v.vote==='down') v.down--;
+            v.vote = (v.vote===type) ? null : type;
+            if(v.vote==='up') v.up++; if(v.vote==='down') v.down++;
+            navigate('cursos');
+        }
+        function toggleComments(id){ const el=document.getElementById('cm-'+id); if(el) el.classList.toggle('hidden'); }
+        function addComment(id){
+            const input = document.getElementById('in-'+id);
+            const text = input.value.trim();
+            if(!text) return;
+            if(hasBadLanguage(text)){ showToast('Evita comentarios ofensivos, intenta de nuevo con respeto', 'warning'); return; }
+            state.videos.find(x=>x.id===id).comments.push({a:'Tú', t:text});
+            navigate('cursos');
+            setTimeout(()=>{ const el=document.getElementById('cm-'+id); if(el) el.classList.remove('hidden'); },0);
+        }
 
-        // --- STREAMING_CHUNK:Renderizando Retos IRL (Gamificación)... ---
         function renderRetos() {
             let html = `
                 <div class="mb-6 flex justify-between items-end">
@@ -289,17 +380,15 @@
                 </div>
                 <div class="space-y-4">
             `;
-            
             state.retos.forEach(reto => {
                 const isCompleted = reto.completed;
-                const borderClass = isCompleted ? 'border-corex-accent bg-corex-accent/5' : 'border-slate-700 bg-corex-card';
+                const borderClass = isCompleted ? 'border-corex-accent bg-corex-accent/5' : 'border-white/5 bg-corex-card';
                 const opacityClass = isCompleted ? 'opacity-60' : 'opacity-100';
-                
                 html += `
                 <div class="${borderClass} ${opacityClass} p-5 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all">
                     <div class="flex-1">
                         <div class="flex items-center space-x-3 mb-1">
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono border border-slate-600">Nivel ${reto.level}</span>
+                            <span class="text-xs px-2 py-0.5 rounded-full bg-corex-card2 text-slate-300 font-mono border border-white/10">Nivel ${reto.level}</span>
                             <span class="text-xs text-corex-warning font-semibold tracking-wider uppercase">${reto.category}</span>
                         </div>
                         <h4 class="text-lg font-bold text-white ${isCompleted ? 'line-through text-slate-400' : ''}">${reto.title}</h4>
@@ -307,9 +396,9 @@
                     </div>
                     <div class="flex items-center justify-between md:flex-col md:items-end gap-3 md:min-w-[120px]">
                         <span class="font-mono font-bold text-corex-primary">+${reto.xp} XP</span>
-                        ${isCompleted ? 
-                            `<span class="text-corex-accent text-sm font-medium"><i class="fa-solid fa-check mr-1"></i> Completado</span>` : 
-                            `<button onclick="completeTask('reto', '${reto.id}', ${reto.xp})" class="px-4 py-2 bg-corex-primary hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-500/20">
+                        ${isCompleted ?
+                            `<span class="text-corex-accent text-sm font-medium"><i class="fa-solid fa-check mr-1"></i> Completado</span>` :
+                            `<button onclick="completeTask('reto', '${reto.id}', ${reto.xp})" class="px-4 py-2 bg-corex-primary hover:brightness-110 text-corex-dark font-semibold rounded-lg text-sm transition-all shadow-lg shadow-corex-primary/20">
                                 Confirmar <i class="fa-solid fa-terminal ml-1"></i>
                             </button>`
                         }
@@ -320,7 +409,6 @@
             return html;
         }
 
-        // --- STREAMING_CHUNK:Renderizando Hábitos (Estilo James Clear)... ---
         function renderHabitos() {
             let html = `
                 <div class="mb-6">
@@ -328,13 +416,11 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             `;
-            
             state.habitos.forEach(habito => {
                 const isDone = habito.doneToday;
-                const checkClass = isDone ? 'bg-corex-accent border-corex-accent text-white' : 'border-slate-500 text-transparent hover:border-corex-primary';
-                
+                const checkClass = isDone ? 'bg-corex-accent border-corex-accent text-corex-dark' : 'border-slate-500 text-transparent hover:border-corex-primary';
                 html += `
-                <div class="bg-corex-card p-5 rounded-2xl border border-slate-700 flex items-center justify-between group">
+                <div class="bg-corex-card p-5 rounded-2xl border border-white/5 flex items-center justify-between group">
                     <div class="flex items-center space-x-4 flex-1">
                         <button onclick="toggleHabit('${habito.id}')" class="w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors ${checkClass}">
                             <i class="fa-solid fa-check text-sm"></i>
@@ -350,31 +436,83 @@
             return html;
         }
 
-        // --- STREAMING_CHUNK:Renderizando Basurero Emocional (Psychological Safety)... ---
         function renderBasurero() {
             return `
                 <div class="max-w-3xl mx-auto flex flex-col h-full relative">
                     <div class="text-center mb-8">
                         <i class="fa-solid fa-dumpster-fire text-4xl text-corex-danger mb-4"></i>
                         <h2 class="text-2xl font-bold text-white mb-2">/dev/null Emocional</h2>
-                        <p class="text-slate-400 text-sm">¿Día frustrante? ¿Alguien rompió prod y te echó la culpa? ¿Ansiedad por networking? Escríbelo aquí. Este espacio es temporal, seguro y <strong>no se guarda en ninguna base de datos</strong>. Cuando presiones el botón, se destruirá permanentemente.</p>
+                        <p class="text-slate-400 text-sm">¿Día frustrante? Escríbelo aquí. Puedes <strong>incinerarlo</strong> sin dejar rastro, o <strong>compartirlo anónimamente</strong> en el muro de apoyo si prefieres no cargarlo solo. Si estás en crisis, busca ayuda profesional: no estás solo/a.</p>
                     </div>
 
                     <div class="flex-1 flex flex-col relative" id="vent-container">
-                        <textarea id="vent-input" class="w-full h-64 bg-slate-900 border border-slate-700 rounded-xl p-6 text-slate-300 font-mono text-sm resize-none focus:outline-none focus:border-corex-danger focus:ring-1 focus:ring-corex-danger transition-colors placeholder-slate-600 shadow-inner" placeholder="Escribe tu frustración aquí. Vomita el texto. No te preocupes por la gramática..."></textarea>
-                        
-                        <div class="mt-6 flex justify-end space-x-4">
+                        <textarea id="vent-input" class="w-full h-56 bg-black/30 border border-white/10 rounded-xl p-6 text-slate-300 font-mono text-sm resize-none focus:outline-none focus:border-corex-danger focus:ring-1 focus:ring-corex-danger transition-colors placeholder-slate-600 shadow-inner" placeholder="Escribe tu frustración aquí. Vomita el texto. No te preocupes por la gramática..."></textarea>
+
+                        <div class="mt-6 flex flex-wrap justify-end gap-3">
+                            <button onclick="shareToWall()" class="px-6 py-3 bg-corex-card2 hover:bg-white/10 border border-white/10 text-white rounded-xl font-semibold transition-colors flex items-center">
+                                <i class="fa-solid fa-hand-holding-heart mr-2"></i> Compartir en el muro
+                            </button>
                             <button onclick="burnJournal()" class="px-6 py-3 bg-corex-danger hover:bg-red-600 text-white rounded-xl font-bold transition-colors shadow-lg shadow-red-500/20 flex items-center group">
                                 <i class="fa-solid fa-fire mr-2 group-hover:scale-125 transition-transform"></i>
-                                Incinerar Registro (rm -rf)
+                                Incinerar (rm -rf)
                             </button>
                         </div>
+                    </div>
+
+                    <div class="mt-10">
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-3">Muro de apoyo (anónimo)</h3>
+                        <div id="wall-list" class="space-y-3">${renderWallPosts()}</div>
                     </div>
                 </div>
             `;
         }
+        function renderWallPosts(){
+            return state.muroApoyo.map((p,i)=>`
+                <div class="bg-corex-card p-4 rounded-xl border border-white/5">
+                    <p class="text-xs text-slate-500 font-mono mb-1">${p.a}</p>
+                    <p class="text-sm text-slate-300">${p.t}</p>
+                    <button onclick="hugPost(${i})" class="mt-2 text-xs text-slate-400 hover:text-corex-accent"><i class="fa-solid fa-heart mr-1"></i>Aquí estoy (${p.h})</button>
+                </div>`).join('');
+        }
+        function shareToWall(){
+            const textarea = document.getElementById('vent-input');
+            const text = textarea.value.trim();
+            if(!text){ showToast('No hay nada que compartir.', 'warning'); return; }
+            if(hasBadLanguage(text)){ showToast('El muro es un espacio de respeto, intenta de nuevo.', 'warning'); return; }
+            state.muroApoyo.unshift({a:'Anónimo', t:text, h:0});
+            textarea.value = '';
+            document.getElementById('wall-list').innerHTML = renderWallPosts();
+            showToast('Publicado de forma anónima en el muro', 'success');
+            addXP(5);
+        }
+        function hugPost(i){ state.muroApoyo[i].h++; document.getElementById('wall-list').innerHTML = renderWallPosts(); }
 
-        // --- STREAMING_CHUNK:Lógica de Interactividad y Gamificación... ---
+        function renderPlanes(){
+            return `
+            <div class="max-w-4xl mx-auto">
+                <p class="text-slate-400 mb-6">Precios de referencia — para cobrar de verdad se conectaría una pasarela como Stripe.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-corex-card p-6 rounded-2xl border border-white/5">
+                        <h3 class="text-white font-bold text-lg mb-1">Gratis</h3>
+                        <p class="text-2xl font-bold text-white mb-4">$0<span class="text-sm text-slate-400 font-normal">/mes</span></p>
+                        <p class="text-sm text-slate-400">Micro-lecciones básicas, 1 reto IRL por semana, hábitos ilimitados.</p>
+                    </div>
+                    <div class="bg-corex-card p-6 rounded-2xl border-2 border-corex-primary relative">
+                        <span class="absolute -top-3 left-6 bg-corex-primary text-corex-dark text-xs font-bold px-2 py-0.5 rounded-full">Popular</span>
+                        <h3 class="text-white font-bold text-lg mb-1">Pro</h3>
+                        <p class="text-2xl font-bold text-white mb-4">$4.99<span class="text-sm text-slate-400 font-normal">/mes</span></p>
+                        <p class="text-sm text-slate-400 mb-4">Retos IRL ilimitados, videos exclusivos, doble XP, sin anuncios.</p>
+                        <button onclick="showToast('Plan Pro seleccionado (demo)','success')" class="w-full py-2 bg-corex-primary text-corex-dark font-semibold rounded-lg">Elegir Pro</button>
+                    </div>
+                    <div class="bg-corex-card p-6 rounded-2xl border border-white/5">
+                        <h3 class="text-white font-bold text-lg mb-1">Equipos</h3>
+                        <p class="text-2xl font-bold text-white mb-4">$9.99<span class="text-sm text-slate-400 font-normal">/dev/mes</span></p>
+                        <p class="text-sm text-slate-400 mb-4">Dashboard de equipo, retos grupales, métricas de soft skills.</p>
+                        <button onclick="showToast('Plan Equipos seleccionado (demo)','success')" class="w-full py-2 bg-corex-card2 border border-white/10 text-white rounded-lg">Elegir Equipos</button>
+                    </div>
+                </div>
+            </div>`;
+        }
 
         function completeTask(type, id, xpGained) {
             if(type === 'reto') {
@@ -383,7 +521,7 @@
                     reto.completed = true;
                     addXP(xpGained);
                     showToast(`¡Reto Completado! +${xpGained} XP`, 'success');
-                    navigate('retos'); // Re-render
+                    navigate('retos');
                 }
             }
         }
@@ -392,95 +530,71 @@
             const habito = state.habitos.find(h => h.id === id);
             if(habito) {
                 habito.doneToday = !habito.doneToday;
-                if(habito.doneToday) {
-                    habito.currentStreak++;
-                    addXP(10);
-                    showToast('Hábito marcado. +10 XP', 'info');
-                } else {
-                    habito.currentStreak = Math.max(0, habito.currentStreak - 1);
-                }
+                if(habito.doneToday) { habito.currentStreak++; addXP(10); showToast('Hábito marcado. +10 XP', 'info'); }
+                else { habito.currentStreak = Math.max(0, habito.currentStreak - 1); }
                 navigate('habitos');
             }
         }
 
         function addXP(amount) {
             state.user.xp += amount;
-            
-            // Lógica de subida de nivel básica (cada 1000xp)
+            state.user.ricegrains += amount * 5;
             if(state.user.xp >= 1000) {
                 state.user.xp -= 1000;
                 state.user.level += 1;
                 showToast(`¡Subiste de Nivel! Ahora eres nivel ${state.user.level} 🎉`, 'success', 5000);
             }
-            
             updateHeaderUI();
+            persist();
         }
 
         function updateHeaderUI() {
             document.getElementById('xp-counter').innerText = state.user.xp;
             document.getElementById('xp-bar').style.width = `${(state.user.xp / 1000) * 100}%`;
-            // En un sistema real, actualizaríamos el nivel mostrado también.
+            document.getElementById('streak-counter').innerText = state.user.streak;
         }
 
         function burnJournal() {
             const textarea = document.getElementById('vent-input');
-            if(textarea.value.trim() === '') {
-                showToast('No hay nada que incinerar.', 'warning');
-                return;
-            }
-
-            // Aplicar animación de destrucción
+            if(textarea.value.trim() === '') { showToast('No hay nada que incinerar.', 'warning'); return; }
             textarea.classList.add('poof-animation');
-            
-            // Simular el borrado y restaurar
             setTimeout(() => {
                 textarea.value = '';
                 textarea.classList.remove('poof-animation');
                 showToast('Memoria borrada de forma segura.', 'success');
-                addXP(5); // Pequeña recompensa por descargar
+                addXP(5);
             }, 1000);
         }
 
-        // --- STREAMING_CHUNK:Sistema de Notificaciones (Toasts)... ---
+        function dismissAd(){
+            document.getElementById('ad-card')?.style.setProperty('display','none');
+            try{ localStorage.setItem('corex_ad_dismissed','1'); }catch(e){}
+        }
+
         function showToast(message, type = 'info', duration = 3000) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            
-            // Colores por tipo
             const colors = {
                 success: 'bg-corex-card border-corex-accent text-white',
                 warning: 'bg-corex-card border-corex-warning text-white',
                 info: 'bg-corex-card border-corex-primary text-white'
             };
-            
-            const icons = {
-                success: 'fa-check-circle text-corex-accent',
-                warning: 'fa-triangle-exclamation text-corex-warning',
-                info: 'fa-info-circle text-corex-primary'
-            };
-
-            toast.className = `flex items-center space-x-3 p-4 rounded-xl border-l-4 shadow-xl fade-in ${colors[type]}`;
-            toast.innerHTML = `
-                <i class="fa-solid ${icons[type]} text-xl"></i>
-                <span class="font-medium text-sm">${message}</span>
-            `;
-            
+            const icons = { success: 'fa-check-circle text-corex-accent', warning: 'fa-triangle-exclamation text-corex-warning', info: 'fa-info-circle text-corex-primary' };
+            toast.className = `toast-pop flex items-center space-x-3 p-4 rounded-xl border-l-4 shadow-xl ${colors[type]}`;
+            toast.innerHTML = `<i class="fa-solid ${icons[type]} text-xl"></i><span class="font-medium text-sm">${message}</span>`;
             container.appendChild(toast);
-            
-            // Remover después del tiempo
             setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100%)';
-                toast.style.transition = 'all 0.3s ease-out';
+                toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; toast.style.transition = 'all 0.3s ease-out';
                 setTimeout(() => toast.remove(), 300);
             }, duration);
         }
 
-        // Inicialización al cargar la página
-        window.onload = () => {
+        window.onload = async () => {
             navigate('dashboard');
+            await initBackend();
+            navigate('dashboard');
+            try{ if(!localStorage.getItem('corex_ad_dismissed')) document.getElementById('ad-card').style.display='flex'; }catch(e){}
         };
-
     </script>
 </body>
 </html>
