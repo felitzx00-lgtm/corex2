@@ -49,6 +49,21 @@
         ::-webkit-scrollbar-thumb:hover { background: #2A4568; }
 
         .toast-pop { animation: fadeIn .25s ease-out; }
+
+        .card-hover{ transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+        .card-hover:hover{ transform: translateY(-4px); box-shadow: 0 14px 30px -12px rgba(23,182,196,.35); border-color: rgba(23,182,196,.4); }
+
+        .nav-btn{ transition: all .2s ease; }
+        .nav-btn i{ transition: transform .2s ease; }
+        .nav-btn:hover i{ transform: scale(1.15) translateX(2px); }
+
+        button{ transition: all .2s ease; }
+        button:active{ transform: scale(.96); }
+
+        #xp-bar{ transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+        @keyframes popIn { 0%{transform:scale(.7);opacity:0} 100%{transform:scale(1);opacity:1} }
+        .stat-pop{ animation: popIn .35s ease-out; }
     </style>
 </head>
 <body class="bg-corex-dark text-slate-300 font-sans h-screen overflow-hidden flex selection:bg-corex-primary selection:text-white">
@@ -245,7 +260,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-corex-card p-6 rounded-2xl border border-white/5 shadow-lg flex flex-col justify-center items-center text-center">
+                    <div class="card-hover bg-corex-card p-6 rounded-2xl border border-white/5 shadow-lg flex flex-col justify-center items-center text-center">
                         <div class="w-24 h-24 rounded-full border-4 border-corex-card2 flex items-center justify-center mb-4 relative">
                             <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
                                 <path class="text-corex-card2" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -299,7 +314,7 @@
                     const statusColor = curso.completed ? 'text-corex-accent' : (curso.progress > 0 ? 'text-corex-primary' : 'text-slate-500');
                     const btnText = curso.completed ? 'Repasar' : (curso.progress > 0 ? 'Continuar' : 'Iniciar');
                     html += `
-                    <div class="bg-corex-card rounded-2xl border border-white/5 p-6 flex flex-col hover:border-corex-primary/50 transition-colors cursor-pointer group">
+                    <div class="card-hover bg-corex-card rounded-2xl border border-white/5 p-6 flex flex-col hover:border-corex-primary/50 transition-colors cursor-pointer group">
                         <div class="flex justify-between items-start mb-4">
                             <div class="w-12 h-12 rounded-xl bg-corex-card2 flex items-center justify-center group-hover:bg-corex-primary/20 transition-colors">
                                 <i class="fa-solid ${curso.icon} text-xl ${statusColor}"></i>
@@ -327,7 +342,7 @@
                 html += `</div>`;
             } else {
                 html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">` + state.videos.map(v => `
-                    <div class="bg-corex-card rounded-2xl border border-white/5 p-5">
+                    <div class="card-hover bg-corex-card rounded-2xl border border-white/5 p-5">
                         <div class="h-32 rounded-xl bg-gradient-to-br from-corex-primary2 to-corex-card2 flex items-center justify-center relative mb-3">
                             <i class="fa-solid ${v.icon} text-3xl text-corex-accent"></i>
                             <span class="absolute bottom-2 right-2 text-[11px] bg-black/50 px-1.5 py-0.5 rounded">${v.dur}</span>
@@ -420,7 +435,7 @@
                 const isDone = habito.doneToday;
                 const checkClass = isDone ? 'bg-corex-accent border-corex-accent text-corex-dark' : 'border-slate-500 text-transparent hover:border-corex-primary';
                 html += `
-                <div class="bg-corex-card p-5 rounded-2xl border border-white/5 flex items-center justify-between group">
+                <div class="card-hover bg-corex-card p-5 rounded-2xl border border-white/5 flex items-center justify-between group">
                     <div class="flex items-center space-x-4 flex-1">
                         <button onclick="toggleHabit('${habito.id}')" class="w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors ${checkClass}">
                             <i class="fa-solid fa-check text-sm"></i>
@@ -489,26 +504,20 @@
 
         function renderPlanes(){
             return `
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-2xl mx-auto">
                 <p class="text-slate-400 mb-6">Precios de referencia — para cobrar de verdad se conectaría una pasarela como Stripe.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-corex-card p-6 rounded-2xl border border-white/5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card-hover bg-corex-card p-6 rounded-2xl border border-white/5">
                         <h3 class="text-white font-bold text-lg mb-1">Gratis</h3>
                         <p class="text-2xl font-bold text-white mb-4">$0<span class="text-sm text-slate-400 font-normal">/mes</span></p>
                         <p class="text-sm text-slate-400">Micro-lecciones básicas, 1 reto IRL por semana, hábitos ilimitados.</p>
                     </div>
-                    <div class="bg-corex-card p-6 rounded-2xl border-2 border-corex-primary relative">
+                    <div class="card-hover bg-corex-card p-6 rounded-2xl border-2 border-corex-primary relative">
                         <span class="absolute -top-3 left-6 bg-corex-primary text-corex-dark text-xs font-bold px-2 py-0.5 rounded-full">Popular</span>
                         <h3 class="text-white font-bold text-lg mb-1">Pro</h3>
-                        <p class="text-2xl font-bold text-white mb-4">$4.99<span class="text-sm text-slate-400 font-normal">/mes</span></p>
+                        <p class="text-2xl font-bold text-white mb-4">$149<span class="text-sm text-slate-400 font-normal">MXN/mes</span></p>
                         <p class="text-sm text-slate-400 mb-4">Retos IRL ilimitados, videos exclusivos, doble XP, sin anuncios.</p>
-                        <button onclick="showToast('Plan Pro seleccionado (demo)','success')" class="w-full py-2 bg-corex-primary text-corex-dark font-semibold rounded-lg">Elegir Pro</button>
-                    </div>
-                    <div class="bg-corex-card p-6 rounded-2xl border border-white/5">
-                        <h3 class="text-white font-bold text-lg mb-1">Equipos</h3>
-                        <p class="text-2xl font-bold text-white mb-4">$9.99<span class="text-sm text-slate-400 font-normal">/dev/mes</span></p>
-                        <p class="text-sm text-slate-400 mb-4">Dashboard de equipo, retos grupales, métricas de soft skills.</p>
-                        <button onclick="showToast('Plan Equipos seleccionado (demo)','success')" class="w-full py-2 bg-corex-card2 border border-white/10 text-white rounded-lg">Elegir Equipos</button>
+                        <button onclick="showToast('Plan Pro seleccionado (demo)','success')" class="w-full py-2 bg-corex-primary text-corex-dark font-semibold rounded-lg transition-transform hover:scale-[1.02]">Elegir Pro</button>
                     </div>
                 </div>
             </div>`;
